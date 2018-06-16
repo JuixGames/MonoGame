@@ -294,6 +294,23 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
+        public static byte[] DataFromStream(GraphicsDevice graphicsDevice, Stream stream, out int width, out int height)
+        {
+            if (graphicsDevice == null)
+                throw new ArgumentNullException("graphicsDevice");
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+
+            try
+            {
+                return PlatformDataFromStream(graphicsDevice, stream, out width, out height);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("This image format is not supported", e);
+            }
+        }
+
         /// <summary>
         /// Converts the texture to a JPG image
         /// </summary>
