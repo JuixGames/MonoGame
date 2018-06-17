@@ -19,6 +19,9 @@ namespace Microsoft.Xna.Framework.Content
 
             var buffer = new VertexBuffer(input.GraphicsDevice, declaration, vertexCount, BufferUsage.None);
             buffer.SetData(data, 0, dataSize);
+#if GLES
+            buffer.raw = data;
+#endif
             return buffer;
         }
     }

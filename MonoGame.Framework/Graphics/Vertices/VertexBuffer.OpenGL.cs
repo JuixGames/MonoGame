@@ -16,6 +16,8 @@ namespace Microsoft.Xna.Framework.Graphics
 		//internal uint vao;
 		internal int vbo;
 
+        internal byte[] raw;
+
         private void PlatformConstruct()
         {
             Threading.BlockOnUIThread(GenerateIfRequired);
@@ -49,6 +51,25 @@ namespace Microsoft.Xna.Framework.Graphics
         private void PlatformGetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride) where T : struct
         {
 #if GLES
+            if (raw != null)
+            {
+                var tmpHandle = GCHandle.Alloc(raw, GCHandleType.Pinned);
+                var tmpPtr = tmpHandle.AddrOfPinnedObject();
+                try
+                {
+                    for (var i = 0; i < elementCount; i++)
+                    {
+                        data[startIndex + i] = (T) Marshal.PtrToStructure(tmpPtr, typeof(T));
+                        tmpPtr = (IntPtr) (tmpPtr.ToInt64() + vertexStride);
+                    }
+                    raw = null;
+                    return;
+                }
+                finally
+                {
+                    tmpHandle.Free();
+                }
+            }
             // Buffers are write-only on OpenGL ES 1.1 and 2.0.  See the GL_OES_mapbuffer extension for more information.
             // http://www.khronos.org/registry/gles/extensions/OES/OES_mapbuffer.txt
             throw new NotSupportedException("Vertex buffers are write-only on OpenGL ES platforms");
