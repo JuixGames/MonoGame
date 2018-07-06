@@ -18,10 +18,11 @@ namespace Microsoft.Xna.Framework.Content
             input.Read(data, 0, dataSize);
 
             var buffer = new VertexBuffer(input.GraphicsDevice, declaration, vertexCount, BufferUsage.None);
-            buffer.SetData(data, 0, dataSize);
 #if GLES
-            buffer.raw = data;
+            buffer.raw = new byte[data.Length];
+            Array.Copy(data, buffer.raw, data.Length);
 #endif
+            buffer.SetData(data, 0, dataSize);
             return buffer;
         }
     }
