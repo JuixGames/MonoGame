@@ -29,8 +29,7 @@ namespace Microsoft.Xna.Framework
                 throw new ArgumentNullException("platform");
             _platform = platform;
             SupportedOrientations = 
-                DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight 
-                | DisplayOrientation.Portrait | DisplayOrientation.PortraitDown;
+                DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
         }
 
         public event EventHandler<EventArgs> InterfaceOrientationChanged;
@@ -73,6 +72,8 @@ namespace Microsoft.Xna.Framework
             ControllerUserInteractionEnabled = false;
             #endif
         }
+
+        public override UIRectEdge PreferredScreenEdgesDeferringSystemGestures => UIRectEdge.All;
 
         public new iOSGameView View
         {
