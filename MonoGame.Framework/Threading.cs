@@ -21,7 +21,7 @@ namespace Microsoft.Xna.Framework
     {
         public const int kMaxWaitForUIThread = 750; // In milliseconds
 
-        static int mainThreadId;
+        public static int mainThreadId;
 
 #if ANDROID || WINDOWS || DESKTOPGL || ANGLE
         static List<Action> actions = new List<Action>();
@@ -121,6 +121,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         internal static void Run()
         {
+            mainThreadId = Thread.CurrentThread.ManagedThreadId;
             EnsureUIThread();
 
             lock (actions)

@@ -100,9 +100,8 @@ namespace Microsoft.Xna.Framework
             while (true)
             {
                 SdlRunLoop();
-                Game.Tick();
-                Threading.Run();
-                GraphicsDevice.DisposeContexts();
+                if (Game.CanTick())
+                    Game.Tick();
 
                 if (_isExiting > 0)
                     break;

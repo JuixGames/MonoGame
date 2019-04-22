@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 #if WINDOWS_UAP
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
@@ -355,7 +356,7 @@ namespace Microsoft.Xna.Framework
                 _initialized = true;
             }
 
-            BeginRun();            
+            BeginRun();
 
             //Not quite right..
             Tick ();
@@ -411,13 +412,26 @@ namespace Microsoft.Xna.Framework
         private Stopwatch _gameTimer;
         private long _previousTicks = 0;
         private int _updateFrameLag;
+        private bool _ticking = false;
+        private object _tickLock = new object();
+
+        public bool CanTick()
+        {
+            lock (_tickLock)
+            {
+                if (_ticking) return false;
+                _ticking = true;
+                return true;
+            }
+        }
 
         public void Tick()
         {
-            // NOTE: This code is very sensitive and can break very badly
-            // with even what looks like a safe change.  Be sure to test 
-            // any change fully in both the fixed and variable timestep 
-            // modes across multiple devices and platforms.
+            Threading.Run();
+        // NOTE: This code is very sensitive and can break very badly
+        // with even what looks like a safe change.  Be sure to test 
+        // any change fully in both the fixed and variable timestep 
+        // modes across multiple devices and platforms.
 
         RetryTick:
 
@@ -460,6 +474,7 @@ namespace Microsoft.Xna.Framework
                     _accumulatedElapsedTime -= TargetElapsedTime;
                     ++stepCount;
 
+                    Threading.mainThreadId = Thread.CurrentThread.ManagedThreadId;
                     DoUpdate(_gameTime);
                 }
 
@@ -493,9 +508,11 @@ namespace Microsoft.Xna.Framework
                 _gameTime.TotalGameTime += _accumulatedElapsedTime;
                 _accumulatedElapsedTime = TimeSpan.Zero;
 
+                Threading.mainThreadId = Thread.CurrentThread.ManagedThreadId;
                 DoUpdate(_gameTime);
             }
 
+            Threading.mainThreadId = Thread.CurrentThread.ManagedThreadId;
             // Draw unless the update suppressed it.
             if (_suppressDraw)
                 _suppressDraw = false;
@@ -506,6 +523,13 @@ namespace Microsoft.Xna.Framework
 
             if (_shouldExit)
                 Platform.Exit();
+
+            GraphicsDevice.DisposeContexts();
+
+            lock (_tickLock)
+            {
+                _ticking = false;
+            }
         }
 
         #endregion
