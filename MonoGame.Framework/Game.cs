@@ -425,7 +425,7 @@ namespace Microsoft.Xna.Framework
             }
         }
 
-        public void Tick()
+        public void Tick(bool doDraw = true)
         {
             Threading.Run();
         // NOTE: This code is very sensitive and can break very badly
@@ -516,7 +516,7 @@ namespace Microsoft.Xna.Framework
             // Draw unless the update suppressed it.
             if (_suppressDraw)
                 _suppressDraw = false;
-            else
+            else if (doDraw)
             {
                 DoDraw(_gameTime);
             }

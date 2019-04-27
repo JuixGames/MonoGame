@@ -59,6 +59,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 case VertexElementFormat.HalfVector4:
                     return 4;
+
+                case VertexElementFormat.Int2:
+                    return 2;
             }
 
             throw new ArgumentException();
@@ -103,6 +106,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 case VertexElementFormat.HalfVector4:
                     return VertexPointerType.Float;
+
+                case VertexElementFormat.Int2:
+                    return VertexPointerType.Int;
             }
 
             throw new ArgumentException();
@@ -141,9 +147,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 case VertexElementFormat.NormalizedShort4:
                     return VertexAttribPointerType.Short;
-                
+
+                case VertexElementFormat.Int2:
+                    return VertexAttribPointerType.Int;
+
 #if WINDOWS || DESKTOPGL
-               case VertexElementFormat.HalfVector2:
+                case VertexElementFormat.HalfVector2:
                     return VertexAttribPointerType.HalfFloat;
 
                 case VertexElementFormat.HalfVector4:
@@ -206,6 +215,9 @@ namespace Microsoft.Xna.Framework.Graphics
                 case VertexElementFormat.Short4:
                     return ColorPointerType.Short;
 
+                case VertexElementFormat.Int2:
+                    return ColorPointerType.Int;
+
                 case VertexElementFormat.NormalizedShort2:
                     return ColorPointerType.UnsignedShort;
 
@@ -252,6 +264,9 @@ namespace Microsoft.Xna.Framework.Graphics
                 case VertexElementFormat.Short4:
                     return NormalPointerType.Short;
 
+                case VertexElementFormat.Int2:
+                    return NormalPointerType.Int;
+
                 case VertexElementFormat.NormalizedShort2:
                     return NormalPointerType.Short;
 
@@ -297,6 +312,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 case VertexElementFormat.Short4:
                     return TexCoordPointerType.Short;
+
+                case VertexElementFormat.Int2:
+                    return TexCoordPointerType.Int;
 
                 case VertexElementFormat.NormalizedShort2:
                     return TexCoordPointerType.Short;
@@ -851,6 +869,9 @@ namespace Microsoft.Xna.Framework.Graphics
                     return 4;
 
                 case VertexElementFormat.Short4:
+                    return 8;
+
+                case VertexElementFormat.Int2:
                     return 8;
 
                 case VertexElementFormat.NormalizedShort2:

@@ -188,12 +188,14 @@ namespace MonoGame.OpenGL
     internal enum VertexPointerType
     {
         Float = 0x1406,
+        Int = 0x1404,
         Short = 0x1402,
     }
 
     internal enum VertexAttribPointerType
     {
         Float = 0x1406,
+        Int = 0x1404,
         Short = 0x1402,
         UnsignedByte = 0x1401,
         HalfFloat = 0x140B,
@@ -225,6 +227,7 @@ namespace MonoGame.OpenGL
     internal enum ColorPointerType
     {
         Float = 0x1406,
+        Int = 0x1404,
         Short = 0x1402,
         UnsignedShort = 0x1403,
         UnsignedByte = 0x1401,
@@ -235,6 +238,7 @@ namespace MonoGame.OpenGL
     {
         Byte = 0x1400,
         Float = 0x1406,
+        Int = 0x1404,
         Short = 0x1402,
         UnsignedShort = 0x1403,
         UnsignedByte = 0x1401,
@@ -245,6 +249,7 @@ namespace MonoGame.OpenGL
     {
         Byte = 0x1400,
         Float = 0x1406,
+        Int = 0x1404,
         Short = 0x1402,
         UnsignedShort = 0x1403,
         UnsignedByte = 0x1401,

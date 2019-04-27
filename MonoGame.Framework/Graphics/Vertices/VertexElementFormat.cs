@@ -52,10 +52,14 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Two component 16-bit floating point number.
         /// </summary>
-        HalfVector2,  
+        HalfVector2,
         /// <summary>
         /// Four component 16-bit floating point number.
         /// </summary>
-        HalfVector4
+        HalfVector4,
+        /// <summary>
+        /// Two component signed 32-bit integer.
+        /// </summary>
+        Int2
     }
 }
